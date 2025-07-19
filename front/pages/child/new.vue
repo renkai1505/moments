@@ -204,6 +204,7 @@
 <script setup lang="ts">
 import { z } from 'zod';
 import type { SaveChildReq } from "~/types";
+import { useGlobalState } from "~/store";
 
 // 表单验证schema
 const schema = z.object({
@@ -236,6 +237,15 @@ const form = ref<SaveChildReq>({
 });
 
 const submitting = ref(false);
+
+// 检查登录状态
+const global = useGlobalState();
+onMounted(() => {
+  if (!global.value.userinfo.token) {
+    // 用户未登录，重定向到登录页面
+    navigateTo('/user/login');
+  }
+});
 
 // 选项数据
 const genderOptions = [
@@ -272,9 +282,20 @@ const handleSubmit = async (data: SaveChildReq) => {
       // 成功创建，跳转到儿童详情页
       await navigateTo(`/child/${result}`);
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('创建儿童档案失败:', error);
-    // TODO: 显示错误提示
+    
+    // 检查是否是认证错误
+    if (error.message?.includes('Token缺失') || error.message?.includes('用户未登录')) {
+      // 清除本地用户信息并重定向到登录页面
+      global.value.userinfo = {};
+      navigateTo('/user/login');
+      return;
+    }
+    
+    // 显示其他错误信息
+    // TODO: 使用toast显示错误提示
+    alert('创建儿童档案失败：' + (error.message || '未知错误'));
   } finally {
     submitting.value = false;
   }

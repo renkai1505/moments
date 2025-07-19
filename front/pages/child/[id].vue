@@ -185,6 +185,7 @@
 <script setup lang="ts">
 import type { ChildVO } from "~/types";
 import { format } from 'date-fns';
+import { useGlobalState } from "~/store";
 
 const route = useRoute()
 const childId = Number(route.params.id)
@@ -203,7 +204,15 @@ const recordTypeOptions = [
   { label: '重要时刻', value: 'milestone' }
 ]
 
+// 检查登录状态
+const global = useGlobalState();
+
 onMounted(async () => {
+  if (!global.value.userinfo.token) {
+    // 用户未登录，重定向到登录页面
+    navigateTo('/user/login');
+    return;
+  }
   await loadChild()
 })
 
@@ -211,8 +220,19 @@ const loadChild = async () => {
   try {
     const res = await useMyFetch<ChildVO>(`/child/${childId}`)
     child.value = res
-  } catch (error) {
+  } catch (error: any) {
     console.error('加载儿童档案失败:', error)
+    
+    // 检查是否是认证错误
+    if (error.message?.includes('Token缺失') || error.message?.includes('用户未登录')) {
+      // 清除本地用户信息并重定向到登录页面
+      global.value.userinfo = {};
+      navigateTo('/user/login');
+      return;
+    }
+    
+    // 显示其他错误信息
+    alert('加载儿童档案失败：' + (error.message || '未知错误'));
   }
 }
 
