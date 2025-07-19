@@ -148,3 +148,111 @@ export type Friend = {
     url: string;
     desc: string;
 }
+
+// 儿童相关类型
+export type ChildVO = {
+    id: number;
+    name: string;
+    nickname: string;
+    birthDate: string;
+    age: number;
+    ageInDays: number;
+    gender: 'M' | 'F';
+    avatarUrl: string;
+    coverUrl: string;
+    height: number;
+    weight: number;
+    bloodType: string;
+    hobbies: string;
+    description: string;
+    parentId: number;
+    createdAt: string;
+    updatedAt: string;
+    parent?: UserVO;
+}
+
+export type SaveChildReq = {
+    id?: number;
+    name: string;
+    nickname?: string;
+    birthDate?: string;
+    gender?: 'M' | 'F';
+    avatarUrl?: string;
+    coverUrl?: string;
+    height?: number;
+    weight?: number;
+    bloodType?: string;
+    hobbies?: string;
+    description?: string;
+}
+
+export type GrowthRecordVO = {
+    id: number;
+    childId: number;
+    title: string;
+    content: string;
+    recordType: 'growth' | 'health' | 'study' | 'play' | 'milestone';
+    height?: number;
+    weight?: number;
+    imgs: string;
+    location: string;
+    recordDate: string;
+    milestone: string;
+    mood: string;
+    weather: string;
+    tags: string;
+    parentId: number;
+    pinned: boolean;
+    showType: number;
+    createdAt: string;
+    updatedAt: string;
+    child?: ChildVO;
+    parent?: UserVO;
+    imgConfigs?: any[];
+}
+
+export type SaveGrowthRecordReq = {
+    id?: number;
+    childId: number;
+    title?: string;
+    content: string;
+    recordType: 'growth' | 'health' | 'study' | 'play' | 'milestone';
+    height?: number;
+    weight?: number;
+    imgs?: string[];
+    location?: string;
+    recordDate?: string;
+    milestone?: string;
+    mood?: string;
+    weather?: string;
+    tags?: string[];
+    pinned?: boolean;
+    showType?: number;
+}
+
+export type TimelineItemVO = {
+    date: string;
+    records: GrowthRecordVO[];
+}
+
+export type GrowthStatsVO = {
+    childId: number;
+    totalRecords: number;
+    recordTypes: { [key: string]: number };
+    heightGrowth: GrowthDataPoint[];
+    weightGrowth: GrowthDataPoint[];
+    milestones: MilestoneVO[];
+}
+
+export type GrowthDataPoint = {
+    date: string;
+    value: number;
+}
+
+export type MilestoneVO = {
+    id: number;
+    title: string;
+    description: string;
+    date: string;
+    ageAtTime: string;
+}

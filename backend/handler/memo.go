@@ -23,7 +23,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/google/uuid"
 	"github.com/kingwrcy/moments/db"
-	fs_util "github.com/kingwrcy/moments/util"
+	"github.com/kingwrcy/moments/util"
 	"github.com/kingwrcy/moments/vo"
 	"github.com/labstack/echo/v4"
 	"github.com/rs/zerolog"
@@ -71,7 +71,7 @@ func (m MemoHandler) RemoveImage(c echo.Context) error {
 	img := strings.ReplaceAll(req.Img, "/upload/", "")
 
 	imageFilePath := filepath.Join(m.base.cfg.UploadDir, img)
-	if fs_util.Exists(imageFilePath) {
+			if util.Exists(imageFilePath) {
 		if err := os.Remove(imageFilePath); err != nil {
 			return FailRespWithMsg(c, ParamError, fmt.Sprintf("删除图片失败:%s", err))
 		}
@@ -79,7 +79,7 @@ func (m MemoHandler) RemoveImage(c echo.Context) error {
 
 	thumbImageFilename := strings.ReplaceAll(req.Img+"_thumb", "/upload/", "")
 	thumbImageFilePath := filepath.Join(m.base.cfg.UploadDir, thumbImageFilename)
-	if fs_util.Exists(thumbImageFilePath) {
+			if util.Exists(thumbImageFilePath) {
 		if err := os.Remove(thumbImageFilePath); err != nil {
 			m.base.log.Error().Msgf("删除缩略图失败, thumbImageFilePath=%s, err=%v", thumbImageFilePath, err)
 		}
@@ -116,7 +116,7 @@ func (m MemoHandler) handleImgConfigs(sysConfigVO *vo.FullSysConfigVO, memo *db.
 		if strings.HasPrefix(img, "/upload/") {
 			thumb_filename := img + "_thumb"
 			thumb_filepath := path.Join(m.base.cfg.UploadDir, path.Base(thumb_filename))
-			if fs_util.Exists(thumb_filepath) {
+			if util.Exists(thumb_filepath) {
 				imgConfig.ThumbUrl = &thumb_filename
 			}
 		} else if sysConfigVO.S3.ThumbnailSuffix != "" && strings.HasPrefix(img, sysConfigVO.S3.Domain) {

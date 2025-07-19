@@ -74,6 +74,21 @@ func setupRouter(injector do.Injector) {
 	friendGroup.POST("/add", friendHandler.AddFriend)
 	friendGroup.POST("/delete", friendHandler.DeleteFriend)
 
+	childHandler, _ := handler.NewChildHandler(injector)
+	childGroup := apiGroup.Group("/child")
+	childGroup.POST("/save", childHandler.SaveChild)
+	childGroup.POST("/list", childHandler.ListChildren)
+	childGroup.GET("/list", childHandler.ListChildren)
+	childGroup.GET("/:id", childHandler.GetChild)
+	childGroup.DELETE("/:id", childHandler.DeleteChild)
+	
+	growthGroup := apiGroup.Group("/growth")
+	growthGroup.POST("/save", childHandler.SaveGrowthRecord)
+	growthGroup.POST("/list", childHandler.ListGrowthRecords)
+	growthGroup.GET("/list", childHandler.ListGrowthRecords)
+	growthGroup.GET("/timeline/:childId", childHandler.GetGrowthTimeline)
+	growthGroup.GET("/stats/:childId", childHandler.GetGrowthStats)
+
 	if cfg.EnableSwagger {
 		e.GET("/swagger/*", echoSwagger.WrapHandler)
 	}
