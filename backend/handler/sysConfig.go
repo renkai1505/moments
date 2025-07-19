@@ -67,8 +67,11 @@ func (s SysConfigHandler) GetFullConfig(c echo.Context) error {
 		result vo.FullSysConfigVO
 	)
 
-	context := c.(CustomContext)
-	currentUser := context.CurrentUser()
+	var currentUser *db.User
+	if customCtx, ok := c.(*CustomContext); ok {
+		currentUser = customCtx.CurrentUser()
+	}
+	
 	if currentUser == nil || currentUser.Id != 1 {
 		return FailRespWithMsg(c, Fail, "需要先登录")
 	}
@@ -99,8 +102,12 @@ func (s SysConfigHandler) SaveConfig(c echo.Context) error {
 		config db.SysConfig
 		result vo.FullSysConfigVO
 	)
-	context := c.(CustomContext)
-	currentUser := context.CurrentUser()
+	
+	var currentUser *db.User
+	if customCtx, ok := c.(*CustomContext); ok {
+		currentUser = customCtx.CurrentUser()
+	}
+	
 	if currentUser == nil || currentUser.Id != 1 {
 		return FailRespWithMsg(c, Fail, "需要先登录")
 	}
