@@ -62,6 +62,7 @@
                   v-model="form.gender" 
                   :options="genderOptions"
                   placeholder="请选择性别"
+                  value-attribute="value"
                 />
               </UFormGroup>
 
@@ -78,6 +79,7 @@
                   v-model="form.bloodType" 
                   :options="bloodTypeOptions"
                   placeholder="请选择血型（可选）"
+                  value-attribute="value"
                 />
               </UFormGroup>
 

@@ -143,6 +143,7 @@
                 :options="recordTypeOptions"
                 placeholder="筛选类型"
                 size="sm"
+                value-attribute="value"
               />
               <UButton 
                 icon="i-heroicons-plus" 
