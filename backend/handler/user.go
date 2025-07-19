@@ -155,14 +155,9 @@ func (u UserHandler) ProfileForUser(c echo.Context) error {
 //	@Success		200	{object}	db.User
 //	@Router			/user/profile [post]
 func (u UserHandler) Profile(c echo.Context) error {
-
-	context := c.(CustomContext)
-	currentUser := context.CurrentUser()
-	if currentUser == nil {
-		u.base.db.Select("username", "nickname", "slogan", "id", "avatarUrl", "coverUrl", "email").First(&currentUser)
-	}
-
-	return SuccessResp(c, currentUser)
+	var user db.User
+	u.base.db.Select("username", "nickname", "slogan", "id", "avatarUrl", "coverUrl", "email").First(&user)
+	return SuccessResp(c, user)
 }
 
 // SaveProfile godoc
@@ -184,8 +179,12 @@ func (u UserHandler) SaveProfile(c echo.Context) error {
 	if err != nil {
 		return FailResp(c, ParamError)
 	}
-	context := c.(CustomContext)
-	currentUser := context.CurrentUser()
+	
+	var currentUser *db.User
+	if customCtx, ok := c.(*CustomContext); ok {
+		currentUser = customCtx.CurrentUser()
+	}
+	
 	if currentUser == nil {
 		return FailResp(c, TokenMissing)
 	}

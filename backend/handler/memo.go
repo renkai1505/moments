@@ -153,8 +153,10 @@ func (m MemoHandler) ListMemos(c echo.Context) error {
 		sysConfigVO vo.FullSysConfigVO
 	)
 
-	ctx := c.(CustomContext)
-	currentUser := ctx.CurrentUser()
+	var currentUser *db.User
+	if customCtx, ok := c.(*CustomContext); ok {
+		currentUser = customCtx.CurrentUser()
+	}
 	err := c.Bind(&req)
 	if err != nil {
 		return FailResp(c, ParamError)
