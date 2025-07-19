@@ -21,8 +21,10 @@ type Child struct {
 	ParentId    int32      `gorm:"column:parentId;NOT NULL" json:"parentId,omitempty"`                             //家长ID
 	CreatedAt   *time.Time `gorm:"column:createdAt;default:CURRENT_TIMESTAMP;NOT NULL" json:"createdAt,omitempty"` //创建时间
 	UpdatedAt   *time.Time `gorm:"column:updatedAt;NOT NULL" json:"updatedAt,omitempty"`                           //更新时间
+
 	Parent      *User           `gorm:"foreignKey:ParentId" json:"parent,omitempty"`                           //关联的家长
 	GrowthRecords []GrowthRecord `gorm:"foreignKey:ChildId" json:"growthRecords,omitempty"`               //关联的成长记录
+
 }
 
 func (c *Child) TableName() string {
@@ -50,8 +52,10 @@ type GrowthRecord struct {
 	ShowType    *int32             `gorm:"column:showType;default:1;NOT NULL" json:"showType,omitempty"`               //显示类型
 	CreatedAt   *time.Time         `gorm:"column:createdAt;default:CURRENT_TIMESTAMP;NOT NULL" json:"createdAt,omitempty"`
 	UpdatedAt   *time.Time         `gorm:"column:updatedAt;NOT NULL" json:"updatedAt,omitempty"`
+
 	Child       *Child             `gorm:"foreignKey:ChildId" json:"child,omitempty"`
 	Parent      *User              `gorm:"foreignKey:ParentId" json:"parent,omitempty"`
+
 	ImgConfigs  *[]map[string]any  `gorm:"-" json:"imgConfigs,omitempty"`
 }
 
