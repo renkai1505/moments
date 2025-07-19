@@ -12,14 +12,14 @@ import (
 	"time"
 
 	"github.com/glebarez/sqlite"
-	fs_util "github.com/kingwrcy/moments/util"
+	"github.com/kingwrcy/moments/util"
 	"github.com/kingwrcy/moments/vo"
 	"github.com/rs/zerolog"
 	"gorm.io/gorm"
 )
 
 func backupDatabase(log zerolog.Logger, cfg *vo.AppConfig) {
-	if !fs_util.Exists(cfg.DB) {
+	if !util.Exists(cfg.DB) {
 		log.Debug().Msgf("原数据库不存在, 所以无需备份数据库")
 		return
 	}

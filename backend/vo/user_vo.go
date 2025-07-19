@@ -20,3 +20,13 @@ type ProfileReq struct {
 	Password  string `json:"password,omitempty"`  //密码,不修改不要填写
 	Email     string `json:"email,omitempty"`     //邮箱
 }
+
+type UserVO struct {
+	Id        int32  `json:"id,omitempty"`
+	Username  string `json:"username,omitempty"`
+	Nickname  string `json:"nickname,omitempty"`
+	AvatarUrl string `json:"avatarUrl,omitempty"`
+	Slogan    string `json:"slogan,omitempty"`
+	CoverUrl  string `json:"coverUrl,omitempty"`
+	Email     string `json:"email,omitempty"`
+}

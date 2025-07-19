@@ -21,6 +21,8 @@
           {{ route.params.tag || "话题专栏" }}
         </span>
         <span v-else-if="$route.path === '/friend'">友情链接</span>
+        <span v-else-if="$route.path.indexOf('/child/') >= 0">儿童档案</span>
+        <span v-else-if="$route.path.indexOf('/growth/') >= 0">成长记录</span>
         <span v-else>
           <span v-if="!global.userinfo.token && $route.path === '/user/login'">
             登录

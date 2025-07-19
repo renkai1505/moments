@@ -259,3 +259,24 @@ func migrateIframeVideoUrl(tx *gorm.DB, log zerolog.Logger) {
 		}
 	}
 }
+
+// migrateChildrenTables 迁移儿童相关表结构
+func migrateChildrenTables(tx *gorm.DB, log zerolog.Logger) {
+	log.Info().Msg("开始迁移儿童相关表结构...")
+
+	// 创建儿童档案表
+	if err := tx.AutoMigrate(&db.Child{}); err != nil {
+		log.Error().Err(err).Msg("创建Child表失败")
+	} else {
+		log.Info().Msg("Child表创建成功")
+	}
+
+	// 创建成长记录表
+	if err := tx.AutoMigrate(&db.GrowthRecord{}); err != nil {
+		log.Error().Err(err).Msg("创建GrowthRecord表失败")
+	} else {
+		log.Info().Msg("GrowthRecord表创建成功")
+	}
+
+	log.Info().Msg("儿童相关表结构迁移完成")
+}
