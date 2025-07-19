@@ -28,7 +28,10 @@ export const useMyFetch = async <T>(url: string, data?: any) => {
 
     if (res.code === 3 || res.code === 4) {
       global.value.userinfo = {}
-      window.location.href = "/"
+      // Prevent infinite redirect loop on homepage
+      if (process.client && window.location.pathname !== "/") {
+        window.location.href = "/"
+      }
       throw new Error(res.message || "请求失败")
     }
 
