@@ -88,6 +88,10 @@ const loadChildren = async () => {
     children.value = res || []
   } catch (error) {
     console.error('加载儿童列表失败:', error)
+    // Don't show error toast for authentication issues on homepage
+    if (!error.message?.includes('Token缺失') && !error.message?.includes('请求失败')) {
+      // Show error for other types of errors
+    }
   }
 }
 
@@ -104,6 +108,10 @@ const loadLatestRecords = async () => {
     latestRecords.value = res.list || []
   } catch (error) {
     console.error('加载最新记录失败:', error)
+    // Don't show error toast for authentication issues on homepage
+    if (!error.message?.includes('Token缺失') && !error.message?.includes('请求失败')) {
+      // Show error for other types of errors
+    }
   }
 }
 
