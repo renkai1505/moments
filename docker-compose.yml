@@ -4,9 +4,9 @@ services:
     container_name: moments
     restart: always
     environment:
-      PORT: 3000
+      PORT: 37892
       JWT_KEY: $JWT_KEY
     ports:
-      - 3000:3000
+      - 37892:37892
     volumes:
-      - /var/moments:/app/data # 持久化数据到主机的 /var/moments 目录，可以按需修改
+      - ./moments:/app/data # 持久化数据到当前目录的 moments 文件夹

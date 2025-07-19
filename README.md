@@ -40,13 +40,30 @@
 
 ## 🚀 快速上手
 
+### 🎯 一键启动 (推荐)
+
+我们提供了便捷的一键启动脚本，支持开发模式和Docker模式：
+
+```bash
+# 开发模式 (前端 + 后端)
+./start.sh dev
+
+# Docker模式
+./start.sh docker
+
+# 查看所有选项
+./start.sh help
+```
+
+📖 **详细使用指南**: [STARTUP_GUIDE.md](./STARTUP_GUIDE.md)
+
 ### 🛠️ 环境变量
 
 Moments 支持以下 **环境变量** 进行配置：
 
 | 变量名         | 说明                   | 默认值                                                                         |
 | -------------- | ---------------------- | ------------------------------------------------------------------------------ |
-| PORT           | 监听端口               | 3000                                                                           |
+| PORT           | 监听端口               | 37892                                                                          |
 | CORS_ORIGIN    | 允许的跨域 Origin 列表 | 空，多个 Origin 可以使用英文逗号分隔，如 `http://127.0.0.1,http://10.10.10.10` |
 | JWT_KEY        | JWT 密钥               | 空，不填写则随机生成，重启后需重新登录                                         |
 | DB             | SQLite 数据库存放目录  | /app/data/db.sqlite                                                            |
@@ -69,15 +86,15 @@ LOG_LEVEL=info
 
 ```bash
 docker run -d \
-  -e PORT=3000 \
+  -e PORT=37892 \
   -e JWT_KEY=$JWT_KEY \
-  -p 3000:3000 \
-  -v /var/moments:/app/data \
+  -p 37892:37892 \
+  -v ./moments:/app/data \
   --name moments \
   kingwrcy/moments:latest
 ```
 
-📌 **持久化数据：** `/app/data` 挂载至 `/var/moments`  
+📌 **持久化数据：** `/app/data` 挂载至 `./moments`  
 📌 **可选：** `latest`（稳定版） 或 `dev`（开发版，功能前沿但相对不稳定）
 
 ### 📝 使用 Docker Compose
@@ -89,12 +106,12 @@ services:
     container_name: moments
     restart: always
     environment:
-      PORT: 3000
+      PORT: 37892
       JWT_KEY: $JWT_KEY
     ports:
-      - 3000:3000
+      - 37892:37892
     volumes:
-      - /var/moments:/app/data # 持久化数据到主机的 /var/moments 目录，可以按需修改
+      - ./moments:/app/data # 持久化数据到当前目录的 moments 文件夹
 ```
 
 ---

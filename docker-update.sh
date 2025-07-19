@@ -3,4 +3,4 @@ mkdir -p ${basepath}/moments
 
 docker stop moments && docker rm moments
 docker pull kingwrcy/moments:latest
-docker run --name moments -e JWT_KEY=cfqYVP6CZm9mSqLVGlmL -d -v ${basepath}/moments:/app/data -p 3000:3000 kingwrcy/moments:latest
+docker run --name moments -e JWT_KEY=cfqYVP6CZm9mSqLVGlmL -e PORT=37892 -d -v ${basepath}/moments:/app/data -p 37892:37892 kingwrcy/moments:latest
