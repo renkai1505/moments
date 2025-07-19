@@ -148,3 +148,44 @@ export type Friend = {
     url: string;
     desc: string;
 }
+
+// 儿童档案相关类型
+export type ChildVO = {
+    id: number;
+    name: string;
+    gender: string;
+    birthDate: string;
+    bloodType: string;
+    avatar: string;
+    description: string;
+    userId: number;
+    createdAt: string;
+    updatedAt: string;
+    user?: UserVO;
+}
+
+export type GrowthRecordVO = {
+    id: number;
+    childId: number;
+    height: number;
+    weight: number;
+    headCirc: number;
+    recordDate: string;
+    notes: string;
+    createdAt: string;
+    updatedAt: string;
+    child?: ChildVO;
+}
+
+export type MilestoneVO = {
+    id: number;
+    childId: number;
+    title: string;
+    description: string;
+    category: string;
+    date: string;
+    isImportant: boolean;
+    createdAt: string;
+    updatedAt: string;
+    child?: ChildVO;
+}

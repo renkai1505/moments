@@ -1,5 +1,28 @@
 <template>
   <Header v-bind:user="currentUser"/>
+  
+  <!-- 儿童档案快捷入口 -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-6 text-white mb-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-bold mb-2">儿童成长相册</h2>
+          <p class="text-blue-100">记录每一个珍贵的成长瞬间</p>
+        </div>
+        <NuxtLink to="/children">
+          <UButton 
+            color="white" 
+            variant="solid"
+            icon="i-heroicons-user-group"
+            class="text-blue-600"
+          >
+            管理儿童档案
+          </UButton>
+        </NuxtLink>
+      </div>
+    </div>
+  </div>
+
   <div class="flex flex-col divide-y divide-[#C0BEBF]/20 ">
     <Memo v-bind:memo="m" v-for="m in memos" :key="m.id" />
   </div>

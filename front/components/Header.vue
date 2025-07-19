@@ -21,6 +21,8 @@
           {{ route.params.tag || "话题专栏" }}
         </span>
         <span v-else-if="$route.path === '/friend'">友情链接</span>
+        <span v-else-if="$route.path === '/children'">儿童档案</span>
+        <span v-else-if="$route.path.indexOf('/children/') >= 0">儿童详情</span>
         <span v-else>
           <span v-if="!global.userinfo.token && $route.path === '/user/login'">
             登录
@@ -113,6 +115,12 @@
       >
         <UIcon
           name="i-jam-search-folder"
+          class="text-[#9fc84a] w-5 h-5 cursor-pointer"
+        />
+      </NuxtLink>
+      <NuxtLink v-if="$route.path === '/'" to="/children" title="儿童档案">
+        <UIcon
+          name="i-heroicons-user-group"
           class="text-[#9fc84a] w-5 h-5 cursor-pointer"
         />
       </NuxtLink>

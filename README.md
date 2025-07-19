@@ -1,32 +1,37 @@
-# 🌟 Moments - 极简朋友圈
+# 🌟 儿童成长相册 - Kids Album
 
 [![release](https://img.shields.io/badge/release-更新记录-blue)](https://github.com/kingwrcy/moments/releases)
 [![docker-release-status](https://img.shields.io/github/actions/workflow/status/kingwrcy/moments/docker-image-release.yml)](https://github.com/kingwrcy/moments/actions/workflows/docker-image-release.yml)
 [![docker-pull](https://img.shields.io/docker/pulls/kingwrcy/moments)](https://hub.docker.com/repository/docker/kingwrcy/moments)
-[![telegram-group](https://img.shields.io/badge/Telegram-group-blue)](https://t.me/simple_moments)
-[![discussion](https://img.shields.io/badge/moments-论坛-blue)](https://discussion.mblog.club)
 
-💡 **从 v0.2.1 开始，Moments 采用 Golang 重写服务端，包体积更小，功能更强！**  
-🔍 **仍需 v0.2.0 版本？[点这里](https://github.com/kingwrcy/moments/blob/master/README.md)**
+💡 **专为记录儿童成长而设计的相册应用，让每个珍贵瞬间都值得珍藏！**  
+🔍 **基于 Moments 项目改造，保留原有功能的同时增加儿童档案管理**
 
 ---
 
 ## 🎯 功能亮点
 
-### 👤 用户系统
+### 👶 儿童档案管理
 
-- 🏠 **默认账号**：`admin/a123456`，登录后可在后台修改
-- 👥 **支持多用户模式**，可控制是否允许注册
+- 👤 **多儿童档案**：支持添加多个儿童档案，每个档案独立管理
+- 📊 **成长数据**：记录身高、体重、头围等成长数据，自动生成成长曲线
+- 🎂 **生日提醒**：自动计算年龄，生日提醒功能
+- 📝 **档案详情**：姓名、性别、出生日期、血型等基本信息管理
 
-### 📝 Memo 记录
+### 📸 成长记录
 
-- 🔖 **标签管理**，让内容更清晰
-- 🖼️ **支持图片上传**，可存储至本地或 S3
-- 🖼️ **自动生成缩略图**（目前仅支持本地上传）
-- 📝 **支持 Markdown 语法**，后续增加更多标签支持
-- ❤️ **点赞 & 评论**，可在后台控制评论功能
-- 🎵 **支持网易云音乐、B 站视频、外部链接嵌入**
-- 📖 **支持豆瓣读书 & 豆瓣电影引用**
+- 🖼️ **照片上传**：支持多图上传，自动生成缩略图
+- 📅 **时间轴浏览**：按时间轴方式浏览所有成长记录
+- 🏷️ **标签分类**：按活动类型、地点等标签分类管理
+- 📍 **位置记录**：记录照片拍摄地点
+- 🎵 **背景音乐**：为相册添加背景音乐
+
+### 📈 成长时间轴
+
+- 📊 **时间轴视图**：以时间轴方式展示所有成长记录
+- 📅 **月份/年份筛选**：按时间筛选查看特定时期的记录
+- 🎯 **里程碑标记**：重要成长节点特殊标记
+- 📱 **移动端适配**：完美适配手机浏览
 
 ### 🛠️ 其他功能
 
@@ -42,7 +47,7 @@
 
 ### 🛠️ 环境变量
 
-Moments 支持以下 **环境变量** 进行配置：
+儿童相册应用支持以下 **环境变量** 进行配置：
 
 | 变量名         | 说明                   | 默认值                                                                         |
 | -------------- | ---------------------- | ------------------------------------------------------------------------------ |
@@ -72,21 +77,21 @@ docker run -d \
   -e PORT=3000 \
   -e JWT_KEY=$JWT_KEY \
   -p 3000:3000 \
-  -v /var/moments:/app/data \
-  --name moments \
+  -v /var/kids-album:/app/data \
+  --name kids-album \
   kingwrcy/moments:latest
 ```
 
-📌 **持久化数据：** `/app/data` 挂载至 `/var/moments`  
+📌 **持久化数据：** `/app/data` 挂载至 `/var/kids-album`  
 📌 **可选：** `latest`（稳定版） 或 `dev`（开发版，功能前沿但相对不稳定）
 
 ### 📝 使用 Docker Compose
 
 ```yaml
 services:
-  moments:
+  kids-album:
     image: kingwrcy/moments:latest
-    container_name: moments
+    container_name: kids-album
     restart: always
     environment:
       PORT: 3000
@@ -94,7 +99,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - /var/moments:/app/data # 持久化数据到主机的 /var/moments 目录，可以按需修改
+      - /var/kids-album:/app/data # 持久化数据到主机的 /var/kids-album 目录，可以按需修改
 ```
 
 ---
@@ -237,4 +242,4 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 [![Star History](https://api.star-history.com/svg?repos=kingwrcy/moments&type=Date)](https://star-history.com/#kingwrcy/moments&Date)
 
-🔥 **如果你觉得 Moments 还不错，欢迎点个 Star！** 🚀
+🔥 **如果你觉得儿童成长相册还不错，欢迎点个 Star！** 🚀

@@ -17,6 +17,9 @@ func setupRouter(injector do.Injector) {
 	fileHandler := handler.NewFileHandler(injector)
 	tagHandler := handler.NewTagHandler(injector)
 	rssHandler := handler.NewRssHandler(injector)
+	childHandler := handler.NewChildHandler(injector)
+	growthHandler := handler.NewGrowthHandler(injector)
+	milestoneHandler := handler.NewMilestoneHandler(injector)
 	e := do.MustInvoke[*echo.Echo](injector)
 	cfg := do.MustInvoke[*vo.AppConfig](injector)
 
@@ -73,6 +76,30 @@ func setupRouter(injector do.Injector) {
 	friendGroup.POST("/list", friendHandler.GetFriendList)
 	friendGroup.POST("/add", friendHandler.AddFriend)
 	friendGroup.POST("/delete", friendHandler.DeleteFriend)
+
+	// 儿童档案相关路由
+	childGroup := apiGroup.Group("/child")
+	childGroup.POST("/list", childHandler.List)
+	childGroup.POST("/get/:id", childHandler.Get)
+	childGroup.POST("/create", childHandler.Create)
+	childGroup.POST("/update/:id", childHandler.Update)
+	childGroup.POST("/delete/:id", childHandler.Delete)
+
+	// 成长记录相关路由
+	growthGroup := apiGroup.Group("/growth")
+	growthGroup.POST("/list", growthHandler.List)
+	growthGroup.POST("/get/:id", growthHandler.Get)
+	growthGroup.POST("/create", growthHandler.Create)
+	growthGroup.POST("/update/:id", growthHandler.Update)
+	growthGroup.POST("/delete/:id", growthHandler.Delete)
+
+	// 里程碑相关路由
+	milestoneGroup := apiGroup.Group("/milestone")
+	milestoneGroup.POST("/list", milestoneHandler.List)
+	milestoneGroup.POST("/get/:id", milestoneHandler.Get)
+	milestoneGroup.POST("/create", milestoneHandler.Create)
+	milestoneGroup.POST("/update/:id", milestoneHandler.Update)
+	milestoneGroup.POST("/delete/:id", milestoneHandler.Delete)
 
 	if cfg.EnableSwagger {
 		e.GET("/swagger/*", echoSwagger.WrapHandler)

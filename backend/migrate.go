@@ -45,7 +45,7 @@ func migrateTo3(tx *gorm.DB, log zerolog.Logger) {
 		item.Js = admin.Js
 		item.BeiAnNo = admin.BeianNo
 		item.Favicon = admin.Favicon
-		item.Title = admin.Title
+		item.Title = "儿童成长相册"
 		if admin.EnableS3 == "0" {
 			item.EnableS3 = false
 		} else {
@@ -66,6 +66,7 @@ func migrateTo3(tx *gorm.DB, log zerolog.Logger) {
 		item.MaxCommentLength = 300
 		item.CommentOrder = "desc"
 		item.TimeFormat = "timeAgo"
+		item.Title = "儿童成长相册"
 		var sysConfig db.SysConfig
 
 		content, err := json.Marshal(&item)
@@ -256,6 +257,36 @@ func migrateIframeVideoUrl(tx *gorm.DB, log zerolog.Logger) {
 			log.Info().Msgf("迁移 memo id: %d 成功", memo.Id)
 		} else {
 			log.Error().Msgf("迁移 memo id: %d 失败, 原因：%v", memo.Id, err)
+		}
+	}
+
+	// 创建儿童档案相关表
+	log.Info().Msg("创建儿童档案相关表...")
+	
+	// 创建Child表
+	if !tx.Migrator().HasTable(&db.Child{}) {
+		if err := tx.AutoMigrate(&db.Child{}); err != nil {
+			log.Error().Msgf("创建Child表失败: %s", err)
+		} else {
+			log.Info().Msg("创建Child表成功")
+		}
+	}
+
+	// 创建GrowthRecord表
+	if !tx.Migrator().HasTable(&db.GrowthRecord{}) {
+		if err := tx.AutoMigrate(&db.GrowthRecord{}); err != nil {
+			log.Error().Msgf("创建GrowthRecord表失败: %s", err)
+		} else {
+			log.Info().Msg("创建GrowthRecord表成功")
+		}
+	}
+
+	// 创建Milestone表
+	if !tx.Migrator().HasTable(&db.Milestone{}) {
+		if err := tx.AutoMigrate(&db.Milestone{}); err != nil {
+			log.Error().Msgf("创建Milestone表失败: %s", err)
+		} else {
+			log.Info().Msg("创建Milestone表成功")
 		}
 	}
 }

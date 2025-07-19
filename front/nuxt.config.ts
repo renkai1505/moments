@@ -29,9 +29,12 @@ export default defineNuxtConfig({
     },
     app: {
         head: {
+            title: '儿童成长相册 - Kids Album',
             meta: [
                 { name: "viewport", content: "width=device-width, initial-scale=1, user-scalable=no" },
                 { charset: "utf-8" },
+                { name: "description", content: "专为记录儿童成长而设计的相册应用，让每个珍贵瞬间都值得珍藏！" },
+                { name: "keywords", content: "儿童相册,成长记录,时间轴,照片管理" },
             ],
             link: [
                 {href: `/css/APlayer.min.css`, rel: 'stylesheet'},
